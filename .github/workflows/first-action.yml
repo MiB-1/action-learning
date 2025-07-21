@@ -1,14 +1,20 @@
-name: first-action
-on: workflow_dispatch
+name: build-action
+on: push
 
 jobs:
   first-job:
     runs-on: ubuntu-latest
     steps:
-      - name: print-something
-        run: |
-          echo "Hello world!!!"
-          echo "This is second line"
+      - name: checkout code
+        uses: actions/checkout@v4
 
-      - name: say-bye
-        run: echo "Good bye!!!"
+      - name: install node latest code
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'latest'
+
+      - name: install dependencies
+        run: npm i
+
+      - name: build project
+        run: npm run build
